@@ -59,6 +59,25 @@ include '../extends/header.php';
              <div class="card-body">
                 <label for="exampleInputEmail1" class="form-label">Email</label>
                 <input type="text" name="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+
+                 <!-- email update start -->
+
+                 <?php if (isset ($_SESSION ['email_update'])) :  ?>
+                <div id="emailHelp" class="form-text text-success">
+                <?= $_SESSION ['email_update'] ?>
+                </div>
+                 <?php endif; unset ($_SESSION ['email_update']) ; ?>
+
+                 <!-- email update end -->
+                   <!-- email error start -->
+
+                 <?php if (isset ($_SESSION ['email_error'])) :  ?>
+                <div id="emailHelp" class="form-text text-danger">
+                <?= $_SESSION ['email_error'] ?>
+                </div>
+                 <?php endif; unset ($_SESSION ['email_error']) ; ?>
+                 
+                 <!-- email error end -->
                 
                 <div class="d-grid gap-2 mt-3">
                     <button class="btn btn-primary" name="email_update_button" type="submit"> Email Update</button>
