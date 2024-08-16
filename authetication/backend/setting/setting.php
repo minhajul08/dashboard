@@ -78,11 +78,29 @@ include '../extends/header.php';
              <form action="setting_mange.php" method="POST">
              <div class="card-body">
                 <label for="exampleInputEmail1" class="form-label">Current Password</label>
-                <input type="text" name="old_pass" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                <input type="password" name="old_pass" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
                 <label for="exampleInputEmail1" class="form-label my-2">New Password</label>
-                <input type="text" name="new_pass" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                <input type="password" name="new_pass" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
                 <label for="exampleInputEmail1" class="form-label my-2">Confirm Password</label>
-                <input type="text" name="confirm_pass" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                <input type="password" name="confirm_pass" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                <!-- name update start -->
+
+                <?php if (isset ($_SESSION ['pass_update'])) :  ?>
+                <div id="emailHelp" class="form-text text-success">
+                <?= $_SESSION ['pass_update'] ?>
+                </div>
+                 <?php endif; unset ($_SESSION ['pass_update']) ; ?> 
+
+                 <!-- pass_success end -->
+                   <!-- pass_error start -->
+
+                 <?php if (isset ($_SESSION ['pass_error'])) :  ?>
+                <div id="emailHelp" class="form-text text-danger">
+                <?= $_SESSION ['pass_error'] ?>
+                </div>
+                 <?php endif; unset ($_SESSION ['pass_error']) ; ?>
+                 
+                 <!-- pass_error end -->
                 
                 <div class="d-grid gap-2 mt-3">
                     <button class="btn btn-primary" name="pass_update_button" type="submit">Password Update</button>
