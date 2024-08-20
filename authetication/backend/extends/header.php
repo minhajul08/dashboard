@@ -7,7 +7,16 @@ if (!isset ($_SESSION ['author_id'])){
 }
 
 $explode = explode('/',$_SERVER['PHP_SELF']);
+$id = $_SESSION ['author_id'];
 $link = end($explode);
+
+$users_query = "SELECT * FROM users WHERE id='$id'";
+
+$connect = mysqli_query($db,$users_query);
+
+$user = mysqli_fetch_assoc($connect);
+
+
 ?>
 
 <!DOCTYPE html>
@@ -56,13 +65,17 @@ $link = end($explode);
     <div class="logo">
         <a href="index.html" class="logo-icon"><span class="logo-text">Neptune</span></a>
         <div class="sidebar-user-switcher user-activity-online">
-            <a href="#">
-                <img src="../../../public/backend/assets/images/avatars/avatar.png">
-                <span class="activity-indicator"></span>
-                <span class="user-info-text"><?=
-               $_SESSION['author_name'] ?><br><span class="user-state-info">On a call</span></span>
-            </a>
-        </div>
+                    <a href="#">
+                        <!-- <img src="../../dashboard_assets/assets/images/avatars/avatar.png"> -->
+                        <?php if($user['image'] == 'default.png'): ?>
+                        <img src="../../../public/uploads/default/<?= $user['image'] ?>">
+                        <?php else : ?>
+                            <img src="../../../public/uploads/profile/<?= $user['image'] ?>">
+                            <?php endif; ?>
+                        <span class="activity-indicator"></span>
+                        <span class="user-info-text"><?= $_SESSION['author_name'] ?><br><span class="user-state-info">On a call</span></span>
+                    </a>
+                </div>
     </div>
     <div class="app-menu">
         <ul class="accordion-menu">

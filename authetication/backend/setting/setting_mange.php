@@ -4,6 +4,7 @@ session_start();
 
 // name update start
  
+ 
 if (isset($_POST['name_update_button'])) {
     $update_name_regex = "/^[a-zA-Z\s]+$/";
     $name = $_POST['name'];
@@ -64,6 +65,8 @@ if (isset($_POST['email_update_button'])) {
 
 // email update end
 
+// pass update start
+
 if (isset($_POST['pass_update_button'])) {
     $old_pass= $_POST['old_pass'];
     $new_pass= $_POST['new_pass'];
@@ -98,5 +101,33 @@ if (isset($_POST['pass_update_button'])) {
     }
 }
 
+
+
+// pass update end
+
+// image update start
+
+if (isset ($_POST ['image_update_button'])) {
+
+    $image = $_FILES['image']['name'];
+    $tmp_path = $_FILES['image']['tmp_name'];
+   
+   if ($image){
+    $id =  $_SESSION ['author_id'];
+    $name =  $_SESSION ['author_name'];
+    $explode = explode('.', $image);
+    $extension = end($explode);
+    $new_name = $id . "-" . $name."-".date("d-m-y"). '.' . $extension;
+    $local_path = "../../../public/uploads/profile/".$new_name;
+
+    if (move_uploaded_file($tmp_path, $local_path)) {
+        $query = "UPDATE users SET image ='$new_name' WHERE id ='$id'";
+        mysqli_query($db, $query);
+        header('location: setting.php');
+    } else {
+        echo "vlo na";
+    }
+   }
+}
 
 ?>

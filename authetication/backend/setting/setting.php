@@ -14,6 +14,7 @@ include '../extends/header.php';
 </div>
 
 <div class="row">
+    <!-- name update start -->
     <div class="col-6">
         <div class="card">
             <div class="card-header">
@@ -48,6 +49,7 @@ include '../extends/header.php';
              </form>
         </div>
     </div>
+  <!-- name update end -->
 
     <!-- email update start -->
     <div class="col-6">
@@ -129,6 +131,26 @@ include '../extends/header.php';
         </div>
     </div>
     <!-- password update end -->
+
+     <!-- img part start -->
+     <div class="col-6">
+        <div class="card">
+            <div class="card-header">
+                <h4> Image Update</h4>
+            </div>
+             <form action="setting_mange.php" method="POST" enctype="multipart/form-data">
+             <div class="card-body">
+                <label for="exampleInputEmail1" class="form-label">Profile Picture</label>
+                <input type="file" name="image" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+            
+                <div class="d-grid gap-2 mt-3">
+                    <button class="btn btn-primary" name="image_update_button" type="submit">Image Update</button>
+                </div>
+            </div>
+             </form>
+        </div>
+    </div>
+  <!-- img part end -->
 </div>
 
 
