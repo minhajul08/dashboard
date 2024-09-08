@@ -89,3 +89,23 @@ if (isset($_POST['update'])) {
         }
     }
 }
+
+
+if (isset($_GET['statusid'])) {
+    $id = $_GET ['statusid'];
+    $statusquery = "SELECT * FROM portfolios WHERE id='$id'";
+    $connect =  mysqli_query($db, $statusquery);
+    $portfolio = mysqli_fetch_assoc($connect);
+
+    if ($portfolio['status']  == 'deactive') {
+        $update_query = "UPDATE portfolios SET status='active' WHERE id='$id'";
+        mysqli_query($db, $update_query);
+        $_SESSION['post_success'] = 'Portfolio Status Change successfully';
+        header('location: portfolios.php');
+    }else {
+        $update_query = "UPDATE portfolios SET status='deactive' WHERE id='$id'";
+        mysqli_query($db, $update_query);
+        $_SESSION['post_success'] = 'Portfolio Status Change successfully';
+        header('location: portfolios.php');
+    }
+}
