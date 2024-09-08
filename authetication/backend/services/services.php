@@ -8,6 +8,42 @@ $services = mysqli_query($db,$service_query);
 
 ?>
 
+<!-- services update start -->
+<?php if (isset ( $_SESSION ['service_update'])) : ?>
+<div class="row">
+    <div class="col-12">
+        <div class="alert alert-custom" role="alert">
+            <div class="custom-alert-icon icon-success"><i class="material-icons-outlined">done</i></div>
+            <div class="alert-content">
+                <span class="alert-title">
+                    <?= $_SESSION ['service_update'] ?>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+<?php endif; unset ( $_SESSION ['service_update'])?>
+
+<!-- services update end -->
+ <!-- services delete start -->
+<?php if (isset ( $_SESSION ['service_delete'])) : ?>
+<div class="row">
+    <div class="col-12">
+        <div class="alert alert-custom" role="alert">
+            <div class="custom-alert-icon icon-danger"><i class="material-icons-outlined">error</i></div>
+            <div class="alert-content">
+                <span class="alert-title">
+                    <?= $_SESSION ['service_delete'] ?>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+<?php endif; unset ( $_SESSION ['service_delete'])?>
+
+<!-- services delete end -->
+
+<!-- services insert start -->
 <?php if (isset ( $_SESSION ['service_insert'])) : ?>
 <div class="row">
     <div class="col-12">
@@ -22,6 +58,27 @@ $services = mysqli_query($db,$service_query);
     </div>
 </div>
 <?php endif; unset ( $_SESSION ['service_insert'])?>
+
+<!-- services insert end -->
+
+
+<!-- services insert start -->
+<?php if (isset ( $_SESSION ['service_status'])) : ?>
+<div class="row">
+    <div class="col-12">
+        <div class="alert alert-custom" role="alert">
+            <div class="custom-alert-icon icon-success"><i class="material-icons-outlined">done</i></div>
+            <div class="alert-content">
+                <span class="alert-title">
+                    <?= $_SESSION ['service_status'] ?>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+<?php endif; unset ( $_SESSION ['service_status'])?>
+
+<!-- services insert end -->
 
 <div class="row">
     <div class="col-12">
@@ -57,9 +114,18 @@ $services = mysqli_query($db,$service_query);
                                     <?= $service ['title'] ?>
                                 </td>
                                 <td>
-                                    <a class="badge bg-danger text-white" href="#"><?= $service ['status'] ?></a>
+                                    <a href="store.php?statusid= <?= $service ['id'] ?>" class=" <?=$service ['status'] == 'deactive' ? 'badge bg-danger' : 'badge bg-success'  ?> text-white" ><?= $service ['status'] ?></a>
                                 </td>
-                                <td>@mdo</td>
+                                <td>
+                                    <div class="d-flex justify-content-around align-items-center">
+                                        <a title="edit" class="text-primary fa-2x" href="edit.php?editid= <?= $service ['id'] ?>">
+                                            <i class="fa fa-pencil"></i>
+                                        </a>
+                                        <a class="text-danger fa-2x" href="store.php?deleteid= <?= $service ['id'] ?>">
+                                            <i class="fa fa-trash-o"></i>
+                                        </a>
+                                    </div>
+                                </td>
                             </tr>
                             <?php endforeach; ?>
                         </tbody>

@@ -7,14 +7,18 @@ if (isset($_SESSION['author_id'])) {
     $users_query = "SELECT * FROM users WHERE id ='$id'";
     $connect = mysqli_query($db, $users_query);
     $user = mysqli_fetch_assoc($connect);
-}else{
+} else {
     $users_query = "SELECT * FROM users";
     $connect = mysqli_query($db, $users_query);
     $user = mysqli_fetch_assoc($connect);
 }
 
 $service_query = "SELECT * FROM services WHERE status='active'";
-$services = mysqli_query($db,$service_query);
+$services = mysqli_query($db, $service_query);
+
+$portfolio_query = "SELECT * FROM portfolios";
+$portfolios = mysqli_query($db, $portfolio_query);
+
 
 
 
@@ -86,6 +90,12 @@ $services = mysqli_query($db,$service_query);
                                         <li class="nav-item"><a class="nav-link" href="#service">service</a></li>
                                         <li class="nav-item"><a class="nav-link" href="#portfolio">portfolio</a></li>
                                         <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
+
+                                        <?php if (isset($_SESSION['author_id'])) : ?>
+                                            <li class="nav-item"><a class="nav-link" href="./authetication/login.php">Dashboard</a></li>
+                                        <?php else: ?>
+                                            <li class="nav-item"><a class="nav-link" href="./authetication/login.php">Login/Register</a></li>
+                                        <?php endif; ?>
                                     </ul>
                                 </div>
                                 <div class="header-btn">
@@ -146,10 +156,10 @@ $services = mysqli_query($db,$service_query);
                     <div class="col-xl-7 col-lg-6">
                         <div class="banner-content">
                             <h6 class="wow fadeInUp" data-wow-delay="0.2s">HELLO!</h6>
-                            <?php if (isset ($_SESSION['author_id'])) :?>
-                            <h2 class="wow fadeInUp" data-wow-delay="0.4s">I am <?= $user['name'] ?></h2>
+                            <?php if (isset($_SESSION['author_id'])) : ?>
+                                <h2 class="wow fadeInUp" data-wow-delay="0.4s">I am <?= $user['name'] ?></h2>
                             <?php else: ?>
-                            <h2 class="wow fadeInUp" data-wow-delay="0.4s">I am <?= $user['name'] ?></h2>
+                                <h2 class="wow fadeInUp" data-wow-delay="0.4s">I am <?= $user['name'] ?></h2>
                             <?php endif; ?>
                             <p class="wow fadeInUp" data-wow-delay="0.6s"> professional web developer with long time experience in this field​.</p>
                             <div class="banner-social wow fadeInUp" data-wow-delay="0.8s">
@@ -165,11 +175,11 @@ $services = mysqli_query($db,$service_query);
                     </div>
                     <div class="col-xl-5 col-lg-6 d-none d-lg-block">
                         <div class="banner-img text-right">
-                        <?php if($user['image'] == 'default.png') : ?>
+                            <?php if ($user['image'] == 'default.png') : ?>
                                 <img src="./public/uploads/default/<?= $user['image'] ?>" style="width: 600px; height:820px;" alt="">
-                                <?php else:  ?>
-                                    <img src="./public/uploads/profile/<?= $user['image'] ?>" style="width: 600px; height:820px;" alt="">
-                                    <?php endif;  ?>
+                            <?php else:  ?>
+                                <img src="./public/uploads/profile/<?= $user['image'] ?>" style="width: 600px; height:820px;" alt="">
+                            <?php endif;  ?>
                         </div>
                     </div>
                 </div>
@@ -272,19 +282,19 @@ $services = mysqli_query($db,$service_query);
                     </div>
                 </div>
                 <div class="row">
-                    <?php foreach ($services as $service) :?>
-                    <div class="col-lg-4 col-md-6">
-                        <div class="icon_box_01 wow fadeInLeft" data-wow-delay="0.2s">
-                            <i class=" <?= $service ['icon'] ?>"></i>
-                            <h3>
-                                <?= $service ['title'] ?>
-                            </h3>
-                            <p>
-                            <?= $service ['description'] ?>
-                            </p>
+                    <?php foreach ($services as $service) : ?>
+                        <div class="col-lg-4 col-md-6">
+                            <div class="icon_box_01 wow fadeInLeft" data-wow-delay="0.2s">
+                                <i class=" <?= $service['icon'] ?>"></i>
+                                <h3>
+                                    <?= $service['title'] ?>
+                                </h3>
+                                <p>
+                                    <?= $service['description'] ?>
+                                </p>
+                            </div>
                         </div>
-                    </div>
-                    <?php endforeach;?>
+                    <?php endforeach; ?>
                 </div>
             </div>
         </section>
@@ -301,79 +311,24 @@ $services = mysqli_query($db,$service_query);
                         </div>
                     </div>
                 </div>
+                
                 <div class="row">
+                <?php foreach($portfolios as $portfolio): ?>
                     <div class="col-lg-4 col-md-6 pitem">
                         <div class="speaker-box">
                             <div class="speaker-thumb">
-                                <img src="./public/fontend/img/images/1.jpg" alt="img">
+                                <img src="./public/uploads/portfolio/<?= $portfolio['image'] ?>" alt="img" style='height:500px; object-fit:cover;'>
                             </div>
                             <div class="speaker-overlay">
-                                <span>Design</span>
-                                <h4><a href="portfolio-single.html">Hamble Triangle</a></h4>
-                                <a href="portfolio-single.html" class="arrow-btn">More information <span></span></a>
+                                <span><?= $portfolio['subtitle'] ?></span>
+                                <h4><a href="single.php?id=<?= $portfolio['id'] ?>">
+                                    <?= $portfolio['title'] ?>
+                                </a></h4>
+                                <a href="single.php?id=<?= $portfolio['id'] ?>" class="arrow-btn">More information <span></span></a>
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-4 col-md-6 pitem">
-                        <div class="speaker-box">
-                            <div class="speaker-thumb">
-                                <img src="./public/fontend/img/images/2.jpg" alt="img">
-                            </div>
-                            <div class="speaker-overlay">
-                                <span>Video</span>
-                                <h4><a href="portfolio-single.html">Dark Beauty</a></h4>
-                                <a href="portfolio-single.html" class="arrow-btn">More information <span></span></a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-4 col-md-6 pitem">
-                        <div class="speaker-box">
-                            <div class="speaker-thumb">
-                                <img src="./public/fontend/img/images/3.jpg" alt="img">
-                            </div>
-                            <div class="speaker-overlay">
-                                <span>Audio</span>
-                                <h4><a href="portfolio-single.html">Gilroy Limbo.</a></h4>
-                                <a href="portfolio-single.html" class="arrow-btn">More information <span></span></a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-4 col-md-6 pitem">
-                        <div class="speaker-box">
-                            <div class="speaker-thumb">
-                                <img src="./public/fontend/img/images/4.jpg" alt="img">
-                            </div>
-                            <div class="speaker-overlay">
-                                <span>Design</span>
-                                <h4><a href="portfolio-single.html">Ipsum which</a></h4>
-                                <a href="portfolio-single.html" class="arrow-btn">More information <span></span></a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-4 col-md-6 pitem">
-                        <div class="speaker-box">
-                            <div class="speaker-thumb">
-                                <img src="./public/fontend/img/images/5.jpg" alt="img">
-                            </div>
-                            <div class="speaker-overlay">
-                                <span>Creative</span>
-                                <h4><a href="portfolio-single.html">Eiusmod tempor</a></h4>
-                                <a href="portfolio-single.html" class="arrow-btn">More information <span></span></a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-4 col-md-6 pitem">
-                        <div class="speaker-box">
-                            <div class="speaker-thumb">
-                                <img src="./public/fontend/img/images/6.jpg" alt="img">
-                            </div>
-                            <div class="speaker-overlay">
-                                <span>UX/UI</span>
-                                <h4><a href="portfolio-single.html">again there</a></h4>
-                                <a href="portfolio-single.html" class="arrow-btn">More information <span></span></a>
-                            </div>
-                        </div>
-                    </div>
+                    <?php endforeach; ?>
                 </div>
             </div>
         </section>
